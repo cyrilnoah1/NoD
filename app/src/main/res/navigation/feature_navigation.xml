@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools" android:id="@+id/feature_navigation"
+            app:startDestination="@id/splashFragment">
+
+
+    <fragment android:id="@+id/newsListFragment"
+              android:name="com.example.nod.features.news.newsList.NewsListFragment"
+              android:label="fragment_news_list" tools:layout="@layout/fragment_news_list">
+        <action
+                android:id="@+id/action_newsListFragment_to_newsDetailsActivity"
+                app:destination="@id/newsDetailsActivity"
+                app:launchSingleTop="true"
+                app:enterAnim="@anim/nav_default_enter_anim"
+                app:exitAnim="@anim/nav_default_exit_anim"
+                app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+                app:popExitAnim="@anim/nav_default_pop_exit_anim"
+                />
+    </fragment>
+    <fragment
+            android:id="@+id/splashFragment"
+            android:name="com.example.nod.features.news.splash.SplashFragment"
+            android:label="fragment_splash"
+            tools:layout="@layout/fragment_splash"
+            >
+        <action
+                android:id="@+id/action_splashFragment_to_newsListFragment"
+                app:destination="@id/newsListFragment"
+                app:popUpTo="@+id/splashFragment"
+                app:popUpToInclusive="true"
+                app:enterAnim="@anim/nav_default_enter_anim"
+                app:exitAnim="@anim/nav_default_exit_anim"
+                app:popEnterAnim="@anim/nav_default_enter_anim"
+                app:popExitAnim="@anim/nav_default_exit_anim"
+                />
+    </fragment>
+    <activity
+            android:id="@+id/newsDetailsActivity"
+            android:name="com.example.nod.features.news.newsDetails.NewsDetailsActivity"
+            android:label="activity_news_details"
+            tools:layout="@layout/activity_news_details"
+            />
+</navigation>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        >
+
+    <data>
+
+        <variable
+                name="news"
+                type="com.example.nod.data.local.models.News"
+                />
+
+        <variable
+                name="publishing"
+                type="String"
+                />
+
+    </data>
+
+    <!--CONTAINER - ROUNDED CORNERS-->
+    <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/news_item_height"
+            app:cardCornerRadius="@dimen/dp20"
+            android:layout_marginTop="@dimen/dp15"
+            android:layout_marginStart="@dimen/dp15"
+            android:layout_marginLeft="@dimen/dp15"
+            android:layout_marginEnd="@dimen/dp15"
+            android:layout_marginRight="@dimen/dp15"
+            >
+
+        <!--NEWS CONTAINER-->
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:background="?selectableItemBackground"
+                android:id="@+id/clNewsContainer"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_width="match_parent"
+                tools:background="@color/newsItemBackground"
+                android:layout_height="match_parent"
+                >
+
+            <!--TITLE-->
+            <TextView
+                    tools:text="@string/placeholder_news_title_msg"
+                    android:id="@+id/tvTitle"
+                    android:text="@{news.title.isEmpty() ? @string/placeholder_hyphen : news.title}"
+                    style="@style/NewsItemTitleStyle"
+                    android:layout_marginTop="@dimen/dp10"
+                    android:layout_marginStart="@dimen/dp10"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:layout_marginRight="@dimen/dp10"
+                    android:layout_marginEnd="@dimen/dp10"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ivNewsImage"
+                    />
+
+            <!--NEWS IMAGE-->
+            <ImageView
+                    android:id="@+id/ivNewsImage"
+                    app:srcUrl="@{news.imageUrl}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:srcCompat="@tools:sample/backgrounds/scenic[3]"
+                    style="@style/NewsImageStyle"
+                    app:layout_constraintTop_toTopOf="parent"
+                    />
+
+            <!--NEWS DESCRIPTION-->
+            <TextView
+                    tools:text="@string/placeholder_news_desc_msg"
+                    android:text="@{news.description.isEmpty() ? @string/placeholder_hyphen : news.description}"
+                    android:id="@+id/tvNewsDescription"
+                    style="@style/NewsDescTextStyle"
+                    android:layout_marginTop="@dimen/dp5"
+                    android:paddingStart="@dimen/dp10"
+                    android:paddingLeft="@dimen/dp10"
+                    android:fontFamily="@font/manrope_regular"
+                    android:paddingEnd="@dimen/dp10"
+                    android:paddingRight="@dimen/dp10"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+                    />
+
+
+            <!--PUBLISHED BY & AT-->
+            <TextView
+                    tools:text="IndianExpress.com   |   23 MAR 2019 at 12:00 am"
+                    android:id="@+id/tvPublishing"
+                    android:text="@{publishing ?? @string/placeholder_hyphen}"
+                    android:layout_marginBottom="@dimen/dp15"
+                    android:layout_marginRight="@dimen/dp20"
+                    android:layout_marginEnd="@dimen/dp20"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    style="@style/NewsDateTextStyle"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</layout>
