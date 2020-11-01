@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="news_item_height">420dp</dimen>
+    <dimen name="news_image_height">250dp</dimen>
+    <dimen name="dp10">10dp</dimen>
+    <dimen name="dp5">5dp</dimen>
+    <dimen name="dp20">20dp</dimen>
+    <dimen name="dp15">15dp</dimen>
+    <dimen name="dp60">60dp</dimen>
+    <dimen name="dp2">2dp</dimen>
+    <dimen name="dp50">50dp</dimen>
+    <dimen name="dp8">8dp</dimen>
+    <dimen name="sp20">20sp</dimen>
+    <dimen name="dp285">285dp</dimen>
+</resources>

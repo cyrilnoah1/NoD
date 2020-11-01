@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/clRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:clickable="true"
+    android:focusable="true"
+    tools:context=".features.news.newsList.NewsListFragment">
+
+    <!--TOOLBAR-->
+    <include
+        android:id="@+id/plToolbar"
+        layout="@layout/partial_home_toolbar" />
+
+
+    <!--SWIPE-TO-REFRESH CONTAINER-->
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/srlRefreshContent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/plToolbar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <!--NO DATA CONTAINER-->
+            <include
+                android:id="@+id/plNoData"
+                layout="@layout/partial_no_data_layout"
+                android:visibility="gone" />
+
+            <!--NEWS LIST-->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvNewsList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/newsListBackground"
+                android:fadingEdge="vertical"
+                android:requiresFadingEdge="vertical"
+                tools:listitem="@layout/item_news_headlines" />
+
+        </LinearLayout>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

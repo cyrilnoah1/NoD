@@ -1,37 +1,72 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion "29.0.3"
+    compileSdkVersion app.compile_sdk
+    buildToolsVersion app.build_tools
 
     defaultConfig {
-        applicationId "com.example.nod"
-        minSdkVersion 16
-        targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
+        applicationId app.application_id
+        minSdkVersion app.min_sdk
+        targetSdkVersion app.target_sdk
+        versionCode app.version_code
+        versionName app.verion_name
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
+        debug {
+            debuggable true
+            buildConfigField "String", "SERVER_URL", "\"${app.base_url}\""
+            buildConfigField "String", "NEWS_API_KEY", "\"${app.news_key}\""
+        }
         release {
             minifyEnabled false
+            buildConfigField "String", "SERVER_URL", "\"${app.base_url}\""
+            buildConfigField "String", "NEWS_API_KEY", "\"${app.news_key}\""
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+
+    dataBinding {
+        enabled = true
+    }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
     }
 }
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'androidx.core:core-ktx:1.3.1'
-    implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-
+    implementation deps.kotlin_stdlib
+    implementation deps.kotlin_coroutines_core
+    implementation deps.kotlin_coroutines
+    implementation deps.appconpat
+    implementation deps.support_v4
+    implementation deps.material_design
+    implementation deps.constraint_layout
+    implementation deps.glide
+    kapt deps.glide_compiler
+    implementation deps.arch_lifecycle_ext
+    kapt deps.arch_lifecycle_compiler
+    implementation deps.navigation_frag_ktx
+    implementation deps.arch_nav_ktx
+    implementation deps.arch_room
+    kapt deps.arch_room_compiler
+    implementation deps.arch_room_paging
+    implementation deps.arch_gson
+    implementation deps.retrofit
+    implementation deps.gson_converter
+    implementation deps.retrofit_rxjava
+    implementation deps.rxjava
+    implementation deps.rxandroid
+    implementation deps.dagger
+    kapt deps.dagger_compiler
+    testImplementation deps.junit
+    androidTestImplementation deps.test_runner
+    androidTestImplementation deps.espresso_core
 }
