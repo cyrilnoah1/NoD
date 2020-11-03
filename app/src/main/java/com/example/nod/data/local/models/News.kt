@@ -17,6 +17,7 @@ data class News(
     @ColumnInfo(name = DESCRIPTION) val description: String,
     @ColumnInfo(name = IMAGE_URL) val imageUrl: String,
     @ColumnInfo(name = PUBLISHED_AT) val publishedAt: String,
+    @ColumnInfo(name = SOURCE_ID) val sourceId: String,
     @ColumnInfo(name = SOURCE_NAME) val sourceName: String,
     @ColumnInfo(name = TITLE) var title: String
 ) {
@@ -28,6 +29,7 @@ data class News(
         const val IMAGE_URL = "image_url"
         const val PUBLISHED_AT = "published_at"
         const val SOURCE_NAME = "source_name"
+        const val SOURCE_ID = "source_id"
         const val TITLE = "title"
     }
 }

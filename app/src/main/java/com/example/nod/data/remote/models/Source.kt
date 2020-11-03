@@ -7,10 +7,12 @@ import com.google.gson.annotations.SerializedName
  */
 data class Source(
     @SerializedName(ID) var id: String? = null,
-    @SerializedName(NAME) var name: String? = null
+    @SerializedName(NAME) var name: String? = null,
+    @SerializedName(DESCRIPTION) var description: String? = null
 ) {
     companion object {
         const val ID = "id"
         const val NAME = "name"
+        const val DESCRIPTION = "description"
     }
 }

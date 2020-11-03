@@ -11,7 +11,13 @@ interface ArticleDataSource {
      * Function to fetch for the latest news data from the internet based on the provided
      * [countryCode], using the News API.
      */
-    fun fetchNewsData(countryCode: String, callback: ArticleDataResponse)
+    fun fetchNewsDataByCountryCode(countryCode: String, callback: ArticleDataResponse)
+
+    /**
+     * Function to fetch for the latest news data from the internet based on the provided
+     * [source], using the News API.
+     */
+    fun fetchNewsDataBySource(source: String, callback: ArticleDataResponse)
 
     /**
      * Callback to provide the response of the new service call.

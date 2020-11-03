@@ -6,6 +6,7 @@
     <string name="placeholder_news_desc_msg">The battle against PewDiePie and T-Series continues, and the internet can\'t get enough. The war continues to separate the fanatics and leads to a long term rivalry. While spectators watch and laugh out at the hilarious situation.</string>
     <string name="placeholder_news_title_msg">PewDiePie vs. T-Series Battle</string>
     <string name="news_info_retrieval_failure_msg">Failed to retrieve the news information.</string>
+    <string name="source_info_retrieval_failure_msg">Failed to retrieve the source information.</string>
     <string name="no_inter_msg">No internet connection</string>
     <string name="hmm_someting_went_wrong_msg">Hmm…\nSomething went wrong</string>
     <string name="check_internet_msg">Double-check your internet connection and try again</string>

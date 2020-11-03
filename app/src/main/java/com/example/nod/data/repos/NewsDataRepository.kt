@@ -30,8 +30,18 @@ class NewsDataRepository : ArticleDataSource, NewsDataSource {
     }
 
 
-    override fun fetchNewsData(countryCode: String, callback: ArticleDataSource.ArticleDataResponse) {
-        remoteData.fetchNewsData(countryCode, callback)
+    override fun fetchNewsDataByCountryCode(
+        countryCode: String,
+        callback: ArticleDataSource.ArticleDataResponse
+    ) {
+        remoteData.fetchNewsDataByCountryCode(countryCode, callback)
+    }
+
+    override fun fetchNewsDataBySource(
+        source: String,
+        callback: ArticleDataSource.ArticleDataResponse
+    ) {
+        remoteData.fetchNewsDataBySource(source, callback)
     }
 
     override fun saveNewsInformation(news: News) {

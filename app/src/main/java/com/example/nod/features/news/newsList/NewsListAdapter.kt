@@ -16,7 +16,7 @@ import com.example.nod.databinding.ItemNewsHeadlinesBinding
 /**
  * [RecyclerView.Adapter] to display generate a paginated list of [News] information list.
  */
-class NewsListAdapter(private val callback: ItemClickCallback? = null) :
+class NewsListAdapter(private val onClick: (news: News) -> Unit) :
     ListAdapter<News, NewsListAdapter.NewsListViewHolder>(ITEM_COMPARATOR) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsListViewHolder {
@@ -61,13 +61,9 @@ class NewsListAdapter(private val callback: ItemClickCallback? = null) :
             }
 
             item.clNewsContainer.setOnClickListener {
-                callback?.onItemClick(news)
+                onClick(news)
             }
         }
-    }
-
-    interface ItemClickCallback {
-        fun onItemClick(news: News)
     }
 
     companion object {

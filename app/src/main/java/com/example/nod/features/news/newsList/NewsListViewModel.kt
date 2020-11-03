@@ -38,10 +38,12 @@ class NewsListViewModel(application: Application) : BaseAndroidViewModel(applica
         newsStrategy.cancelPendingProcesses()
     }
 
-    fun fetchNewsInformation() {
+    fun fetchNewsInformation(query: String, type: QueryType) {
         obsProgress.postValue(true)
+
         newsStrategy.fetchAndSaveNewsInformation(
-            INDIA_COUNTRY_CODE,
+            query,
+            type,
             object : DataBehaviour.NewsInformationBehaviour.ResultCallback {
 
                 override fun onSuccess() {
@@ -59,7 +61,8 @@ class NewsListViewModel(application: Application) : BaseAndroidViewModel(applica
 
     // Ignoring the warning as it is the application context.
     @Suppress("UNCHECKED_CAST")
-    class Factory(private val application: Application) : ViewModelProvider.AndroidViewModelFactory(application) {
+    class Factory(private val application: Application) :
+        ViewModelProvider.AndroidViewModelFactory(application) {
 
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             return NewsListViewModel(application) as T
@@ -74,3 +77,5 @@ class NewsListViewModel(application: Application) : BaseAndroidViewModel(applica
         const val AUSTRALIA_COUNTRY_CODE = "au"
     }
 }
+
+enum class QueryType { SOURCE, COUNTRY_CODE }
