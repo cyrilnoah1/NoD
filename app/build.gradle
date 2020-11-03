@@ -17,6 +17,21 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        release {
+            try {
+                keyAlias 'key_nod'
+                keyPassword RELEASE_KEYSTORE_PASSWORD
+                storeFile file('../release_key')
+                storePassword RELEASE_KEYSTORE_PASSWORD
+            }
+            catch (ex) {
+                throw new InvalidUserDataException(
+                        "You should define RELEASE_KEYSTORE_PASSWORD in gradle.properties.")
+            }
+        }
+    }
+
     buildTypes {
         debug {
             debuggable true
