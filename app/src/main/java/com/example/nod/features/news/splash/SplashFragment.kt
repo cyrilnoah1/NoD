@@ -31,7 +31,8 @@ class SplashFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         uiScope.launch {
             delay(SPLASH_DELAY_MILLI)
-            clRoot?.findNavController()?.navigate(R.id.action_splashFragment_to_newsListFragment)
+            clRoot?.findNavController()
+                ?.navigate(R.id.action_splashFragment_to_newsDetailsFragment2)
         }
     }
 

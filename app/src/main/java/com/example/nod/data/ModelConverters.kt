@@ -14,6 +14,7 @@ fun Article.toNews(): News {
         description = description ?: EMPTY_STRING,
         imageUrl = urlToImage ?: EMPTY_STRING,
         publishedAt = publishedAt ?: EMPTY_STRING,
+        sourceId = source?.id ?: EMPTY_STRING,
         sourceName = source?.name ?: EMPTY_STRING,
         title = title ?: EMPTY_STRING
     )

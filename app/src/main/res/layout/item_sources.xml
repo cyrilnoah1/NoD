@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="source"
+            type="com.example.nod.data.local.models.Source" />
+
+    </data>
+
+    <!--NEWS CONTAINER-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clSourceContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true">
+
+        <!--TITLE-->
+        <TextView
+            android:id="@+id/tvTitle"
+            style="@style/NewsItemTitleStyle"
+            android:layout_marginStart="@dimen/dp10"
+            android:layout_marginLeft="@dimen/dp10"
+            android:layout_marginEnd="@dimen/dp10"
+            android:layout_marginRight="@dimen/dp10"
+            android:gravity="start"
+            android:text="@{source.name.isEmpty() ? @string/placeholder_hyphen : source.name}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/placeholder_news_title_msg" />
+
+        <TextView
+            android:id="@+id/tvDescription"
+            style="@style/NewsDescTextStyle"
+            android:layout_width="0dp"
+            android:layout_marginTop="@dimen/dp10"
+            android:layout_marginBottom="@dimen/dp10"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="@{source.description.isEmpty() ? @string/placeholder_hyphen : source.description}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/tvTitle"
+            app:layout_constraintStart_toStartOf="@+id/tvTitle"
+            app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+            tools:text="Some random text" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

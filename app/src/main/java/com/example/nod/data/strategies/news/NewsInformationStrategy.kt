@@ -8,6 +8,7 @@ import com.example.nod.data.remote.models.Article
 import com.example.nod.data.repos.NewsDataRepository
 import com.example.nod.data.strategies.DaggerNewsDataComponent
 import com.example.nod.data.strategies.DataBehaviour
+import com.example.nod.features.news.newsList.QueryType
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -36,27 +37,55 @@ class NewsInformationStrategy : DataBehaviour.NewsInformationBehaviour {
     }
 
     override fun fetchAndSaveNewsInformation(
-        countryCode: String,
+        query: String,
+        queryType: QueryType,
         callback: DataBehaviour.NewsInformationBehaviour.ResultCallback
     ) {
 
-        newsRepo.fetchNewsData(
-            countryCode,
-            object : ArticleDataSource.ArticleDataResponse {
+        fun fetchAndSaveByCountryCode() {
+            newsRepo.fetchNewsDataByCountryCode(
+                query,
+                object : ArticleDataSource.ArticleDataResponse {
 
-                override fun onSuccess(articles: List<Article>) {
-                    // Once the article information has been successfully received, converting
-                    // and storing the information in the local cache.
-                    ioScope.launch { newsRepo.saveNewsInformationList(articles.map { it.toNews() }) }
-                    callback.onSuccess()
-                }
+                    override fun onSuccess(articles: List<Article>) {
+                        // Once the article information has been successfully received, converting
+                        // and storing the information in the local cache.
+                        ioScope.launch { newsRepo.saveNewsInformationList(articles.map { it.toNews() }) }
+                        callback.onSuccess()
+                    }
 
-                override fun onFailure(message: String) {
-                    callback.onFailure()
-                    Log.e(TAG, message)
+                    override fun onFailure(message: String) {
+                        callback.onFailure()
+                        Log.e(TAG, message)
+                    }
                 }
-            }
-        )
+            )
+        }
+
+        fun fetchAndSaveBySource() {
+            newsRepo.fetchNewsDataBySource(
+                query,
+                object : ArticleDataSource.ArticleDataResponse {
+
+                    override fun onSuccess(articles: List<Article>) {
+                        // Once the article information has been successfully received, converting
+                        // and storing the information in the local cache.
+                        ioScope.launch { newsRepo.saveNewsInformationList(articles.map { it.toNews() }) }
+                        callback.onSuccess()
+                    }
+
+                    override fun onFailure(message: String) {
+                        callback.onFailure()
+                        Log.e(TAG, message)
+                    }
+                }
+            )
+        }
+
+        when (queryType) {
+            QueryType.SOURCE -> fetchAndSaveBySource()
+            QueryType.COUNTRY_CODE -> fetchAndSaveByCountryCode()
+        }
     }
 
     override fun getNewsInformation(): LiveData<List<News>> {

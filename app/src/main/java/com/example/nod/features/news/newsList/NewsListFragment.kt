@@ -27,10 +27,25 @@ import kotlinx.android.synthetic.main.partial_no_data_layout.*
  * local cache, and the updated information is fetched dynamically by listening to the changes in
  * the database.
  */
-class NewsListFragment : Fragment(), NewsListAdapter.ItemClickCallback {
+class NewsListFragment : Fragment() {
 
-    private val newsListAdapter = NewsListAdapter(this)
+    private val newsListAdapter by lazy {
+        NewsListAdapter { news ->
+            if (news.contentUrl.isValidUrl()) {
+
+                val args = Bundle()
+                args.putString(BUND_CONTENT_URL, news.contentUrl)
+
+                clRoot?.findNavController()?.navigate(
+                    R.id.action_newsListFragment_to_newsDetailsActivity,
+                    args
+                )
+            }
+        }
+    }
     private var newsActivity: NewsActivity? = null
+
+    private val sources by lazy { arguments?.getString(ARG_SOURCES) }
 
     private val viewModel: NewsListViewModel by lazy {
         val factory = NewsListViewModel.Factory(requireActivity().application)
@@ -44,10 +59,10 @@ class NewsListFragment : Fragment(), NewsListAdapter.ItemClickCallback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // 1. Making sure that the news information is fetched only when there is not data available.
+        // 1. Making sure that the news information is fetched only when there is no data available.
         // 2. We make sure that we make to call manually when the user explicitly asks for it.
         // 3. This check is helpful during a configuration change.
-        viewModel.fetchNewsInformation()
+        viewModel.fetchNewsInformation(getQuery(), getQueryType())
     }
 
     override fun onCreateView(
@@ -65,26 +80,10 @@ class NewsListFragment : Fragment(), NewsListAdapter.ItemClickCallback {
     }
 
     /**
-     * [rvNewsList] RecyclerView item click listener.
-     */
-    override fun onItemClick(news: News) {
-
-        if (news.contentUrl.isValidUrl()) {
-
-            val args = Bundle()
-            args.putString(BUND_CONTENT_URL, news.contentUrl)
-
-            clRoot?.findNavController()?.navigate(
-                R.id.action_newsListFragment_to_newsDetailsActivity,
-                args
-            )
-        }
-    }
-
-    /**
      * Function to retrieve the news information list and populate the [rvNewsList] RecyclerView.
      */
     private fun setupNewsList() {
+        sources?.let { plToolbar?.visible() } ?: run { plToolbar?.gone() }
         // Setting up the RecyclerView.
         rvNewsList?.run {
             layoutManager = LinearLayoutManager(requireContext())
@@ -97,16 +96,32 @@ class NewsListFragment : Fragment(), NewsListAdapter.ItemClickCallback {
 
             it?.let { list ->
 
-                // Checking whether the data has been loaded correctly.
-                if (list.isEmpty() && newsActivity?.getNetworkState() == false) {
-                    rvNewsList?.gone()
-                    plNoData?.visible()
-                } else {
-                    rvNewsList?.visible()
-                    plNoData?.gone()
-                }
+                when (getQueryType()) {
+                    QueryType.SOURCE -> {
+                        // Checking whether the data has been loaded correctly.
+                        if (list.none { data -> data.sourceId == sources } && newsActivity?.getNetworkState() == false) {
+                            rvNewsList?.gone()
+                            plNoData?.visible()
+                        } else {
+                            rvNewsList?.visible()
+                            plNoData?.gone()
+                        }
 
-                newsListAdapter.submitList(list)
+                        newsListAdapter.submitList(list.filter { data -> data.sourceId == sources })
+                    }
+                    QueryType.COUNTRY_CODE -> {
+                        // Checking whether the data has been loaded correctly.
+                        if (list.isEmpty() && newsActivity?.getNetworkState() == false) {
+                            rvNewsList?.gone()
+                            plNoData?.visible()
+                        } else {
+                            rvNewsList?.visible()
+                            plNoData?.gone()
+                        }
+
+                        newsListAdapter.submitList(list)
+                    }
+                }
             }
         })
 
@@ -151,12 +166,21 @@ class NewsListFragment : Fragment(), NewsListAdapter.ItemClickCallback {
         // Making sure that the latest data is fetched only when
         // the internet connection is available.
         if (newsActivity?.getNetworkState() == true) {
-            viewModel.fetchNewsInformation()
+            viewModel.fetchNewsInformation(getQuery(), getQueryType())
         } else {
             srlRefreshContent?.progressComplete()
             newsActivity?.networkSnack?.show()
         }
     }
 
+    private fun getQuery() = sources ?: NewsListViewModel.US_COUNTRY_CODE
 
+    private fun getQueryType() = if (sources != null) QueryType.SOURCE else QueryType.COUNTRY_CODE
+
+    companion object {
+        const val ARG_SOURCES = "sources"
+
+        @JvmStatic
+        fun newInstance() = NewsListFragment()
+    }
 }

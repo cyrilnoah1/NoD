@@ -12,4 +12,5 @@ const val API_VERSION_V2 = "v2"
 
 // Key constants.
 const val COUNTRY_CODE_KEY = "country"
+const val SOURCES_KEY = "sources"
 const val NEWS_API_KEY = "apiKey"

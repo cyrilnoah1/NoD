@@ -17,6 +17,10 @@
                 app:popEnterAnim="@anim/nav_default_pop_enter_anim"
                 app:popExitAnim="@anim/nav_default_pop_exit_anim"
                 />
+        <argument
+            android:name="sources"
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
     <fragment
             android:id="@+id/splashFragment"
@@ -25,15 +29,9 @@
             tools:layout="@layout/fragment_splash"
             >
         <action
-                android:id="@+id/action_splashFragment_to_newsListFragment"
-                app:destination="@id/newsListFragment"
-                app:popUpTo="@+id/splashFragment"
-                app:popUpToInclusive="true"
-                app:enterAnim="@anim/nav_default_enter_anim"
-                app:exitAnim="@anim/nav_default_exit_anim"
-                app:popEnterAnim="@anim/nav_default_enter_anim"
-                app:popExitAnim="@anim/nav_default_exit_anim"
-                />
+            android:id="@+id/action_splashFragment_to_newsDetailsFragment2"
+            app:destination="@id/newsDetailsFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <activity
             android:id="@+id/newsDetailsActivity"
@@ -41,4 +39,13 @@
             android:label="activity_news_details"
             tools:layout="@layout/activity_news_details"
             />
+    <fragment
+        android:id="@+id/newsDetailsFragment"
+        android:name="com.example.nod.features.news.newsDetails.SourceAndNewsFragment"
+        android:label="fragment_news_details"
+        tools:layout="@layout/fragment_source_and_news" >
+        <action
+            android:id="@+id/action_newsDetailsFragment_to_newsListFragment"
+            app:destination="@id/newsListFragment" />
+    </fragment>
 </navigation>
